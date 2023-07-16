@@ -39,7 +39,7 @@ namespace TrianglesWinForms.Operations
             if(validationResult.Success)
             {
                 var organizedTriangles = trianglesOrganizer.Organize(triangles);
-                var renderedTriangles = trianglesRender.Render(organizedTriangles);
+                var renderedTriangles = trianglesRender.Render(organizedTriangles, 4);
                 
                 return trianglesViewModelFactory.Create(renderedTriangles, "info test");
             }
