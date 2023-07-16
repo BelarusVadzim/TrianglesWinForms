@@ -8,6 +8,7 @@ namespace TrianglesWinForms.Extentions.Triangles
             Functions.ChecTrianglesRelation(ancestor, child);
 
         public static bool CheckForIntersection(this Triangle curent, Triangle triangle) =>
-            Functions.CheckIsTrianglesIntersect(curent, triangle);
+            Functions.CheckIsTrianglesIntersect(curent, triangle) 
+            || Functions.CheckIsTrianglesIntersect(triangle, curent);
     }
 }

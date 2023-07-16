@@ -38,7 +38,7 @@ namespace TrianglesWinForms.Utils
             //If there are more then 0 we have to check childrens of each triangle in the array
             for (var i = 0; i < triangles.Count; i++)
             {
-                if (triangles[i].CheckForIntersection(triangle))
+                if (triangles[i].CheckIsAncestor(triangle))
                 {
                     triangle.Parent = triangles[i];
                     AddChild(triangles[i].Children, triangle);

@@ -1,4 +1,5 @@
-﻿using TrianglesWinForms.Operations;
+﻿using System.Windows.Forms;
+using TrianglesWinForms.Operations;
 
 namespace TrianglesWinForms
 {
@@ -23,6 +24,7 @@ namespace TrianglesWinForms
             if (view.HasErrors)
                 return;
 
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.Image = view.RenderedTriangles;
         }
     }

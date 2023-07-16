@@ -18,6 +18,9 @@ namespace TrianglesWinForms.Models.Factories
             if (strings.Length < 2)
                 throw new FormatException();
 
+            if (strings.Any(s => string.IsNullOrWhiteSpace(s)))
+                throw new FormatException("Data file contains empty lines");
+
             if (!int.TryParse(strings[0], out var amount))
                 throw new FormatException();
 

@@ -14,7 +14,19 @@ namespace TrianglesWinForms.Utils
 
         public async Task<TrianglesData> GetTrianglesDataAsync()
         {
-            string[] lines = await File.ReadAllLinesAsync("triangles.dat");
+            const string FileName = "triangles.dat";
+
+            string[] lines;
+
+            try
+            {
+                lines = await File.ReadAllLinesAsync(FileName);
+            }
+            catch(FileNotFoundException) 
+            {
+                throw new FileNotFoundException($"File {FileName} not found");
+            }
+
 
             return trianglesDataFactory.Create(lines);
         }

@@ -6,30 +6,24 @@ namespace TrianglesWinForms.Utils
     {
         private readonly TrianglesDataService trianglesDataService;
         private readonly TrianglesDataValidator trianglesDataValidator;
-        private readonly TrianglesOrganizer trianglesOrganizer;
-        private readonly TrianglesValidator trianglesValidator;
 
         public TrianglesService()
         {
             trianglesDataService = new TrianglesDataService();
             trianglesDataValidator = new TrianglesDataValidator();
-            trianglesOrganizer = new TrianglesOrganizer();
-            trianglesValidator = new TrianglesValidator();
         }
 
         public async Task<List<Triangle>> GetTrianglesAsync()
         {
             var data = await trianglesDataService.GetTrianglesDataAsync();
 
-            trianglesDataValidator.Validate(data);
+            TrianglesDataValidator.Validate(data);
 
             return data
                 .Coordinates
                 .Select(x => BuildTrianglesPoints(x))
                 .Select(x => new Triangle(x))
                 .ToList();
-
-
         }
 
         private List<Point> BuildTrianglesPoints(int[] coordinates) 

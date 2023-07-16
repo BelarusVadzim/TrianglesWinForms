@@ -5,7 +5,7 @@ namespace TrianglesWinForms.Utils
 {
     public sealed class TrianglesDataValidator
     {
-        public void Validate(TrianglesData trianglesData) 
+        public static void Validate(TrianglesData trianglesData) 
         {
             ArgumentNullException.ThrowIfNull(nameof(trianglesData));
 

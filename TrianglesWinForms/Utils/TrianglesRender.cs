@@ -5,27 +5,29 @@ namespace Triangles.Utils
 {
     internal class TrianglesRender
     {
-        public Bitmap Render(List<Triangle> triangles, int scale = 1)
-        {
-            var canvasSize = GetCanvasSize(triangles, scale);
+        const int MaxCanvasX = 2000;
+        const int MaxCanvasY = 2000;
 
-            var Width = canvasSize.X+10;
-            var Height = canvasSize.Y+10;
+        public Bitmap Render(List<Triangle> triangles)
+        {
+            var maxCoordinates = GetMaxCoordinates(triangles);
+            var autoScale = GetAutoScale(maxCoordinates);
+
+            var canvasSize = GetCanvasSize(maxCoordinates, autoScale);
+
+            var Width = canvasSize.X;
+            var Height = canvasSize.Y;
 
             var triangleColor = Color.FromArgb(128, 128, 200, 128);
-            var backgroundColor = Color.FromArgb(255, 255, 255);
+            var triangleBorderColor = Color.FromArgb(100, 128, 100);
             var bitmap = new Bitmap(Width, Height);
 
             using (var gfx = Graphics.FromImage(bitmap))
-            using (var brush = new SolidBrush(backgroundColor))
-            using (var pen = new Pen(triangleColor))
+            using (var brush = new SolidBrush(triangleColor))
+            using (var pen = new Pen(triangleBorderColor))
             {
                 gfx.SmoothingMode = SmoothingMode.AntiAlias;
-                gfx.FillRectangle(brush, 0, 0, Width, Height);
-
-                brush.Color = triangleColor;
-
-                RenderTriangles(triangles, gfx, brush, pen, scale);
+                RenderTriangles(triangles, gfx, brush, pen, autoScale);
             }
 
             return bitmap;
@@ -36,7 +38,7 @@ namespace Triangles.Utils
             triangles.ForEach(triangle =>
             {
                 var points = scale != 1
-                    ? triangle.Points.Select(p => new Point(p.X * scale, p.Y*scale)).ToArray()
+                    ? triangle.Points.Select(p => new Point(p.X * scale, p.Y * scale)).ToArray()
                     : triangle.Points;
 
                 gfx.FillPolygon(brush, points);
@@ -45,28 +47,22 @@ namespace Triangles.Utils
             });
         }
 
-        private Point GetMaxCoordinates(List<Triangle> triangles, Point maxCoordinatesd = new Point())
+        private static Point GetMaxCoordinates(List<Triangle> triangles) =>
+            new (
+                 triangles.Max(tr => tr.Points.Max(p => p.X)),
+                 triangles.Max(tr => tr.Points.Max(p => p.Y))
+                );
+
+
+        private static Point GetCanvasSize(Point maxCoordinates, int scale ) =>
+            new(maxCoordinates.X * scale, maxCoordinates.Y * scale);
+
+        private static int GetAutoScale(Point canvasSize)
         {
-            var maxX = maxCoordinatesd.X = triangles.Max(tr => tr.Points.Max(p => p.X));
-            var maxY = maxCoordinatesd.Y = triangles.Max(tr => tr.Points.Max(p => p.Y));
-
-            maxCoordinatesd.X = maxCoordinatesd.X < maxX ? maxX : maxCoordinatesd.X;
-            maxCoordinatesd.Y = maxCoordinatesd.Y < maxY ? maxY : maxCoordinatesd.Y;
-
-            triangles.ForEach(triangle =>
-            {
-                if (triangle.Children.Any())
-                    maxCoordinatesd = GetMaxCoordinates(triangle.Children, maxCoordinatesd);
-            });
-
-            return maxCoordinatesd;
-        }
-
-        private Point GetCanvasSize(List<Triangle> triangles, int scale)
-        {
-            var maxCoordinates = GetMaxCoordinates(triangles);
-
-            return new Point(maxCoordinates.X * scale, maxCoordinates.Y * scale);
+            var scaleX = MaxCanvasX / canvasSize.X;
+            var scaleY = MaxCanvasY / canvasSize.Y;
+            
+            return scaleX > scaleY ? scaleY : scaleX;
         }
     }
 }
