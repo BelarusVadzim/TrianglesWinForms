@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-using TrianglesWinForms.Operations;
+﻿using TrianglesWinForms.Operations;
 
 namespace TrianglesWinForms
 {
@@ -17,15 +16,14 @@ namespace TrianglesWinForms
 
         private async void TrianglesForm_Load(object sender, EventArgs e)
         {
-            var view = await getTrianglesViewModelOperation.ExecuteAsync();
+            var trinaglesViewModel = await getTrianglesViewModelOperation.ExecuteAsync();
 
-            infoTextLabel.Text = view.Info;
+            infoTextLabel.Text = trinaglesViewModel.Info;
 
-            if (view.HasErrors)
+            if (trinaglesViewModel.HasErrors)
                 return;
 
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.Image = view.RenderedTriangles;
+            pictureBox1.Image = trinaglesViewModel.RenderedTriangles;
         }
     }
 }

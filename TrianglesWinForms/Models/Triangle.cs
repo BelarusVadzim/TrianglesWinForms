@@ -2,10 +2,7 @@
 {
     public class Triangle
     {
-        public Triangle()
-        {
-            
-        }
+        public Triangle() { }
 
         public Triangle(List<Point> points)
         {

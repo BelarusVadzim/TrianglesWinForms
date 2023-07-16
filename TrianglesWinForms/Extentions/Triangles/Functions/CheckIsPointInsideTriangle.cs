@@ -6,6 +6,8 @@ namespace TrianglesWinForms.Extentions.Triangles
     {
         private static bool CheckIsPointInsideTriangle(Triangle triangle, Point point)
         {
+            ArgumentNullException.ThrowIfNull(triangle, nameof(triangle));
+
             var IsPointInSameHalfPlaneAsTriangle1 = (triangle.A.X - point.X) * (triangle.B.Y - triangle.A.Y)
                 - (triangle.B.X - triangle.A.X) * (triangle.A.Y - point.Y) > 0;
             var IsPointInSameHalfPlaneAsTriangle2 = (triangle.B.X - point.X) * (triangle.C.Y - triangle.B.Y)

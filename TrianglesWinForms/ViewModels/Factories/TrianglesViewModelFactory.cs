@@ -5,10 +5,7 @@
         public TrianglesViewModel Create(Bitmap renderedTriangles, string infoText) =>
             new() { RenderedTriangles = renderedTriangles, Info = infoText, HasErrors = false };
 
-        public TrianglesViewModel Create(string infoText) =>
-            new() { Info = infoText, HasErrors = true };
-
-
-
+        public TrianglesViewModel Create(string? infoText) =>
+            new() { Info = infoText ?? "Unknown error", HasErrors = true };
     }
 }

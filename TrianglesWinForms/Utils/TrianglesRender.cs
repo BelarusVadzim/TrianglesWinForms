@@ -3,13 +3,15 @@ using Triangles.Models;
 
 namespace Triangles.Utils
 {
-    internal class TrianglesRender
+    public sealed class TrianglesRender
     {
         const int MaxCanvasX = 2000;
         const int MaxCanvasY = 2000;
 
         public Bitmap Render(List<Triangle> triangles)
         {
+            ArgumentNullException.ThrowIfNull(triangles, nameof(triangles));
+
             var maxCoordinates = GetMaxCoordinates(triangles);
             var autoScale = GetAutoScale(maxCoordinates);
 
@@ -52,7 +54,6 @@ namespace Triangles.Utils
                  triangles.Max(tr => tr.Points.Max(p => p.X)),
                  triangles.Max(tr => tr.Points.Max(p => p.Y))
                 );
-
 
         private static Point GetCanvasSize(Point maxCoordinates, int scale ) =>
             new(maxCoordinates.X * scale, maxCoordinates.Y * scale);

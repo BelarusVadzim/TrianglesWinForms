@@ -6,6 +6,8 @@ namespace TrianglesWinForms.Utils
     {
         public int Count(IEnumerable<Triangle> triangles, int generation = 1) 
         {
+            ArgumentNullException.ThrowIfNull(triangles, nameof(triangles));
+
             var nextGeneration = triangles
                 .Where((x) => x.Children.Count > 0)
                 .Select((x) => x.Children)

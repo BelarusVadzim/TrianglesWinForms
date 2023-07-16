@@ -27,7 +27,6 @@ namespace TrianglesWinForms.Utils
                 throw new FileNotFoundException($"File {FileName} not found");
             }
 
-
             return trianglesDataFactory.Create(lines);
         }
     }

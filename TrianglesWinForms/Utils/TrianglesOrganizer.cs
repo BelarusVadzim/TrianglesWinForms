@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Triangles.Models;
+﻿using Triangles.Models;
 using TrianglesWinForms.Extentions.Triangles;
 
 namespace TrianglesWinForms.Utils
@@ -13,6 +7,8 @@ namespace TrianglesWinForms.Utils
     {
         public List<Triangle> Organize(List<Triangle> triangles)
         {
+            ArgumentNullException.ThrowIfNull(triangles, nameof(triangles));
+
             var organizedTriangles = new List<Triangle>();
 
             while (triangles.Count > 0)
@@ -46,7 +42,7 @@ namespace TrianglesWinForms.Utils
                 }
             }
 
-            //If there is no any parent trinagle in array then current one is sibling and we have to add it in the current array
+            //If there is no any parent trinagle in array then the current one is sibling and we have to add it in the current array
             triangles.Add(triangle);
         }
 

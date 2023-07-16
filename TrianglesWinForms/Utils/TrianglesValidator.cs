@@ -7,6 +7,8 @@ namespace TrianglesWinForms.Utils
     {
         public Models.ValidationResult Validate(List<Triangle> triangles) 
         {
+            ArgumentNullException.ThrowIfNull(triangles, nameof(triangles));
+
             for (var i = 0; i < triangles.Count - 1; i++)
             {
                 for (var n = i + 1; n < triangles.Count; n++)
@@ -16,7 +18,7 @@ namespace TrianglesWinForms.Utils
                         return new Models.ValidationResult 
                         { 
                             Success = false, 
-                            Message = $"triangles {triangles[n]} and {triangles[i]} intersect" 
+                            Message = $"Error" 
                         };
                     }
                 }

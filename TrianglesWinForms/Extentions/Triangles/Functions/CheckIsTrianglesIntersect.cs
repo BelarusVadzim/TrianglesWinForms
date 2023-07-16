@@ -1,5 +1,4 @@
-﻿using System;
-using Triangles.Models;
+﻿using Triangles.Models;
 using TrianglesWinForms.Models;
 
 namespace TrianglesWinForms.Extentions.Triangles
@@ -8,6 +7,9 @@ namespace TrianglesWinForms.Extentions.Triangles
     {
         public static bool CheckIsTrianglesIntersect(Triangle triangle1, Triangle triangle2)
         {
+            ArgumentNullException.ThrowIfNull(triangle1, nameof(triangle1));
+            ArgumentNullException.ThrowIfNull(triangle2, nameof(triangle2));
+
             var points = new List<Point> { triangle2.A, triangle2.B, triangle2.C };
             var segments = new List<Segment>
             {

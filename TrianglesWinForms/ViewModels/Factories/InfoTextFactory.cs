@@ -14,6 +14,8 @@ namespace TrianglesWinForms.ViewModels.Factories
 
         public string Create(IEnumerable<Triangle> OrganizedTriangles) 
         {
+            ArgumentNullException.ThrowIfNull(OrganizedTriangles, nameof(OrganizedTriangles));
+
             var generationAmount = trianglesGenerationCounter.Count(OrganizedTriangles);
 
             return $"Number of shades: {generationAmount}";
