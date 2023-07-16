@@ -3,23 +3,20 @@ using TrianglesWinForms.Models.Factories;
 
 namespace TrianglesWinForms.Utils
 {
-    public sealed class DataReader
+    public sealed class TrianglesDataService
     {
         private readonly TrianglesDataFactory trianglesDataFactory;
 
-        public DataReader()
+        public TrianglesDataService()
         {
             trianglesDataFactory = new TrianglesDataFactory();
         }
 
-        public async Task<TrianglesData> GetTrianglesData()
+        public async Task<TrianglesData> GetTrianglesDataAsync()
         {
             string[] lines = await File.ReadAllLinesAsync("triangles.dat");
 
             return trianglesDataFactory.Create(lines);
         }
-
-        private TrianglesData
-
     }
 }

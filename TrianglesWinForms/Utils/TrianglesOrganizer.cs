@@ -11,13 +11,6 @@ namespace TrianglesWinForms.Utils
 {
     public sealed class TrianglesOrganizer
     {
-        private readonly TrianglesValidator trianglesValidator;
-
-        public TrianglesOrganizer()
-        {
-            trianglesValidator = new TrianglesValidator();
-        }
-
         public List<Triangle> Organize(List<Triangle> triangles)
         {
             var organizedTriangles = new List<Triangle>();

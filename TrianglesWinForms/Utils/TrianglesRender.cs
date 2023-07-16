@@ -7,10 +7,10 @@ namespace Triangles.Utils
     {
         public Bitmap Render(List<Triangle> triangles)
         {
-            const int Width = 500;
-            const int Height = 300;
+            const int Width = 300;
+            const int Height = 100;
             
-            var triangleColor = Color.FromArgb(128, 128, 200, 150);
+            var triangleColor = Color.FromArgb(100, 0, 200, 0);
             var backgroundColor = Color.FromArgb(255, 255, 255);
             var bitmap = new Bitmap(Width, Height);
 

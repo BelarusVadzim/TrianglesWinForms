@@ -1,5 +1,7 @@
 ﻿using Triangles.Models;
 using Triangles.Utils;
+using TrianglesWinForms.Models;
+using TrianglesWinForms.Models.Factories;
 using TrianglesWinForms.Utils;
 using TrianglesWinForms.ViewModels;
 using TrianglesWinForms.ViewModels.Factories;
@@ -12,6 +14,7 @@ namespace TrianglesWinForms.Operations
         private readonly TrianglesRender trianglesRender;
         private readonly TrianglesOrganizer trianglesOrganizer;
         private readonly TrianglesValidator trianglesValidator;
+        private readonly TrianglesService trianglesService;
 
         public GetTrianglesViewModelOperation()
         {
@@ -19,26 +22,29 @@ namespace TrianglesWinForms.Operations
             trianglesRender = new TrianglesRender();
             trianglesOrganizer = new TrianglesOrganizer();
             trianglesValidator = new TrianglesValidator();
+            trianglesService = new TrianglesService();
         }
-        public TrianglesViewModel Execute()
+        public async Task<TrianglesViewModel> ExecuteAsync()
         {
-            var triangle = new Triangle { A = new Point(0, 0), B = new Point(20, 100), C = new Point(40, 0) };
-            var triangle2 = new Triangle { A = new Point(10, 0), B = new Point(30, 100), C = new Point(50, 0) };
-            var triangleChild1 = new Triangle { A = new Point(11, 1), B = new Point(30, 50), C = new Point(49, 1) };
+            //var triangle = new Triangle { A = new Point(0, 0), B = new Point(20, 100), C = new Point(40, 0) };
+            //var triangle2 = new Triangle { A = new Point(10, 0), B = new Point(30, 100), C = new Point(50, 0) };
+            //var triangleChild1 = new Triangle { A = new Point(11, 1), B = new Point(30, 50), C = new Point(49, 1) };
             //triangle2.Children.Add(triangleChild1);
-            var triangles = new List<Triangle> { triangle, triangle2, triangleChild1 };
+            //var triangles2 = new List<Triangle> { triangle, triangle2, triangleChild1 };
+
+            var triangles = await trianglesService.GetTrianglesAsync();
 
             var validationResult = trianglesValidator.Validate(triangles);
 
+            if(validationResult.Success)
+            {
+                var organizedTriangles = trianglesOrganizer.Organize(triangles);
+                var renderedTriangles = trianglesRender.Render(organizedTriangles);
+                
+                return trianglesViewModelFactory.Create(renderedTriangles, "info test");
+            }
 
-            var organizedTriangles = trianglesOrganizer.Organize(triangles);
-
-
-            var renderedTriangles = trianglesRender.Render(organizedTriangles);
-
-            var view = trianglesViewModelFactory.Create(renderedTriangles, "info test");
-
-            return view;
+            return trianglesViewModelFactory.Create(validationResult.Message!);
         }
     }
 }

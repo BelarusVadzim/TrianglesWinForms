@@ -2,6 +2,18 @@
 {
     public class Triangle
     {
+        public Triangle()
+        {
+            
+        }
+
+        public Triangle(List<Point> points)
+        {
+            A = points[0];
+            B = points[1];
+            C = points[2];
+        }
+
         public Point A { get; set; }
 
         public Point B { get; set; }

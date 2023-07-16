@@ -4,6 +4,6 @@
     {
         public int Amount { get; set; }
 
-        public string[] CoordinatStrings { get; set; } = Array.Empty<string>();
+        public int[][] Coordinates { get; set; } = Array.Empty<int[]>();
     }
 }
