@@ -16,6 +16,9 @@ namespace TrianglesWinForms
 
         private async void TrianglesForm_Load(object sender, EventArgs e)
         {
+            var xxx = new HW.HW();
+            var yyy = xxx.Execute();
+
             var trinaglesViewModel = await getTrianglesViewModelOperation.ExecuteAsync();
 
             infoTextLabel.Text = trinaglesViewModel.Info;
